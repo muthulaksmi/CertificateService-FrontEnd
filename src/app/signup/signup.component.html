@@ -1,0 +1,53 @@
+<div class="main">
+  <p class="sign" align="center">Sign-up</p>
+  <form class="form1" [formGroup]="myForm" >
+    <table>
+      <tr>
+        <td>
+          <input class="un" formControlName="firstName" align="center" placeholder="First Name" autocomplete="off"
+            value="" required="" (blur)="errorCheckFirstName()" >
+             
+        </td>
+        <td>
+          <input class="un" type="text" formControlName="lastName" align="center" placeholder="Last Name" autocomplete="" value="" (blur)="errorCheckFirstName()">
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <input class="un" type="text" formControlName="userName" align="center" placeholder="User Name" value="" autocomplete="off">
+        
+        </td>
+        <td>
+          <input class="un" type="email" formControlName="email" align="center" placeholder="Email" autocomplete="off" value="">
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <input class="un" type="password" formControlName="password" align="center" placeholder="password" autocomplete="new-password" value="">
+        </td>
+        <td>
+          <input class="un" type="password" formControlName="confirmPassword" align="center" placeholder="Confirm Password" autocomplete="off" value="">
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <select class="un">
+            <option value="Admin">Admin</option>
+            <option value="User">User</option>
+          </select>
+        </td>
+      </tr>
+      
+      <tr>
+        <td colspan="2">
+          <button class="submit" [disabled]="myForm.invalid">Submit</button>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <p *ngIf ="submitted" align ="center">{{ error }}</p>
+        </td>
+      </tr>
+    </table>
+  </form>
+</div>
