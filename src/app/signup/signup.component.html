@@ -1,6 +1,6 @@
 <div class="main">
   <p class="sign" align="center">Sign-up</p>
-  <form class="form1" [formGroup]="myForm" >
+  <form class="form1" id="form1" [formGroup]="myForm" (ngSubmit) ="registerUser()" >
     <table>
       <tr>
         <td>
@@ -30,25 +30,18 @@
           <input class="un" type="password" formControlName="confirmPassword" align="center" placeholder="Confirm Password" autocomplete="off" value="" (blur)="errorCheckConfirmPassword()">
         </td>
       </tr>
-      <tr>
-        <td>
-          <select class="un">
-            <option class="opt" value="Admin">Admin</option>
-            <option class="opt" value="User">User</option>
-          </select>
-        </td>
-      </tr>
-      
+            
       <tr>
         <td colspan="2">
-          <button class="submit" [disabled]="false" (click) = "registerUser()" > Submit </button>
+          <button class="submit" > Submit </button>
         </td>
       </tr>
       <tr>
         <td>
-          <p class="error" *ngIf ="submitted" align ="center">{{ error }}</p>
+          <p class="error" *ngIf ="submitted" align ="center">{{ formerror }}</p>
         </td>
       </tr>
     </table>
   </form>
+
 </div>
