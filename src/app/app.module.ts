@@ -43,7 +43,7 @@ const appRoutes:Routes = [
     MatDialogModule
   ],
   
-  providers: [
+   providers: [
     provideClientHydration()
   ],
   bootstrap: [AppComponent]

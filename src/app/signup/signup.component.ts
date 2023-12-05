@@ -13,29 +13,29 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 
 
-export class SignupComponent implements OnInit{
-  user!: User;  
+export class SignupComponent implements OnInit {
+  //user!: User;  
   submitted = false;
   formerror ="";
-  
-  myForm: FormGroup = new FormGroup({});
-
+ 
+  myForm!: FormGroup; 
+  private url = 'http://localhost:8080/auth/register';
    ngOnInit(): void {
     this.myForm = this.fb.group({ 
     
-      firstName:['',[Validators.required, Validators.pattern('^[a-zA-Z ]*$')]],
-      lastName:['',[Validators.required, Validators.pattern('^[A-Za-z]+$')]],
+      firstName:['',[Validators.required, Validators.pattern('^[a-zA-Z]*$'), Validators.maxLength(20)]],
+      lastName:['',[Validators.required, Validators.pattern('^[A-Za-z]*$'), Validators.maxLength(20)]],
       userName:['',[Validators.required, Validators.minLength(8), Validators.maxLength(14)]],
-      email:['',Validators.compose([Validators.required,Validators.pattern('^\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$')])],
+      //'^\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$'
+      ///^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/
+      email:['',Validators.compose([Validators.required,Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{3,}$/)])],
       password:['',Validators.compose([Validators.required, Validators.minLength(8), Validators.maxLength(14)])],
       confirmPassword:['',[Validators.required]],
     });
 
   }
     constructor(private fb:FormBuilder, private router:Router, private http:HttpClient, public dialog: MatDialog ) {  
-      
-      
- 
+            
   }
   errorCheckConfirmPassword(){
 
@@ -120,7 +120,7 @@ export class SignupComponent implements OnInit{
 
     
     if (this.myForm.get('firstName')?.hasError('pattern')){
-      this.formerror = "** Please enter a valid name with no numbers.";
+      this.formerror = "** Please enter a valid name with no numbers and no special characters.";
       console.log(this.formerror);
       this.submitted = true;
     }
@@ -128,6 +128,11 @@ export class SignupComponent implements OnInit{
       this.formerror = "** First Name is required";
       this.submitted = true;
       console.log(this.formerror);
+    }
+    else if (this.myForm.get('firstName')?.hasError('maxlength')){
+      this.formerror = "** First Name should not exceed 20 char in length";
+      this.submitted = true;
+      
     }
     else{ 
       this.formerror = "";
@@ -148,6 +153,11 @@ export class SignupComponent implements OnInit{
       this.submitted = true;
       console.log(this.formerror);
     }
+    else if (this.myForm.get('lastName')?.hasError('maxlength')){
+      this.formerror = "** lastName should not exceed 20 char in length";
+      this.submitted = true;
+      
+    }
     else{ 
       this.formerror = "";
       this.submitted = false;
@@ -156,7 +166,7 @@ export class SignupComponent implements OnInit{
   }
 
   registerUser(){
-    console.log("come here")
+    
     const data = {
       firstName: this.myForm.controls['firstName'].value,
       lastName: this.myForm.controls['lastName'].value,
@@ -165,21 +175,31 @@ export class SignupComponent implements OnInit{
       password: this.myForm.controls['password'].value,
       role:"user",
     };
-    console.log("come here");
-    let url = 'http://localhost:8080/auth/register';
 
-    return this.http.post(url, data).subscribe((response) =>{
+    
+    
+   if (this.myForm.controls['firstName'].value !== "" && this.myForm.controls['lastName'].value !== "" && this.myForm.controls['userName'].value !== "" && this.myForm.controls['email'].value !== "" && this.myForm.controls['password'].value !== "" && this.myForm.controls['confirmPassword'].value !== "")
+    {
+      let url = 'http://localhost:8080/auth/register';
+     this.http.post(url, data).subscribe((response) =>{
       console.log("Come here");
       console.log("post successful: ", response);
       this.openDialog();
     //  this.dialogRef.open(PopUpComponent);
-    });
+    },
     (error: any) => {
       console.log("No here");
       console.error("Error during post: ", error);
-    }
+      //this.formerror = error;
+    });
+  }
+  else {
+    this.submitted = true;
+    this.formerror = "All Fields are mandatory.";
   }
 
+    
+  }
   openDialog(): void {
     const dialogRef = this.dialog.open(DialogComponent, {
       width: '250px',
@@ -194,17 +214,6 @@ export class SignupComponent implements OnInit{
 
 }
 
-class User{
-
-  fname!: string;
-  lname!: string;
-  uname!: string;
-  email!:string;
-  password!: string;
-  role!:string;
-  
-
-}
 
 @Component({
   selector: 'app-dialog',
@@ -228,7 +237,7 @@ export class DialogComponent {
 
   onNoClick(): void {
     this.dialogRef.close();
-    this.router.navigate(['/login'])
+    this.router.navigate(['/login']);
     //Close the dialog
   }
 }
