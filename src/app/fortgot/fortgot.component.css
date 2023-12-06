@@ -10,7 +10,7 @@
 }
 
 .un {
-    width: 240px;
+    width: 260px;
     color: rgb(38, 50, 56);
     font-weight: 700;
     font-size: 14px;
@@ -53,4 +53,11 @@
         margin-left: 110px;
         margin-bottom: 17px;
     
+    }
+
+    .error{
+        height: 1em; 
+        color: red; 
+        font-size: 0.8em; 
+        padding-left: 50px;
     }

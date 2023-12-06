@@ -2,6 +2,7 @@
   <p class="sign" align="center">Sign-up</p>
   <form class="form1" id="form1" [formGroup]="myForm" (ngSubmit) ="registerUser()" >
     <table>
+      <tbody>
       <tr>
         <td>
           <div class ="lab">
@@ -62,6 +63,7 @@
           <p class="error" *ngIf ="submitted" align ="center">{{ formerror }}</p>
         </td>
       </tr>
+    </tbody>
     </table>
   </form>
 

@@ -1,5 +1,5 @@
 <div class="main">
-    <form class="form1" id="form1">
+    <form class="form1" id="form1" [formGroup]="myForm">
       <table>
         <tbody>
         <tr>
@@ -11,7 +11,7 @@
             <td>
             <div>
               <input class="un" type="text" align="center" placeholder="" formControlName="email"
-                autocomplete="off" value="" required="" >
+                autocomplete="off" value="" required="" (blur)="errorCheckEmail()">
             </div>
           </td>
         </tr>
@@ -23,8 +23,12 @@
             </div>
           </td>
         </tr>
+        <tr>
+          <td colspan="2">
+            <p class="error" *ngIf ="submitted" align ="center">{{ formerror }}</p>
+          </td>
+        </tr>
     </tbody>
     </table>
     </form>
-    <p class="error"></p>
   </div>

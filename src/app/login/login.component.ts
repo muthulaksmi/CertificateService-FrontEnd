@@ -42,8 +42,8 @@ export class LoginComponent implements OnInit {
       },
       (error: any) => {
         // Handle login error
-        console.error('Login failed', error);
-        this.formerror = "Username or password is incorrect.";
+        console.error('Login failed', error.error.result);
+        this.formerror = error.error.result;
         this.submitted = true;
       });
     }
