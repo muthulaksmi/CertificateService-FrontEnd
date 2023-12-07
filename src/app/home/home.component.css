@@ -10,23 +10,19 @@
     
 
   }
-  .heading{
-    margin-left: 60%;
-    margin-bottom: 5%;
+  .CertificateNumber{
+    text-decoration: none;
+
   }
   .right {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     width: 100%;
-     background-color: rgba((158, 218, 241, 0.369)126, 138, 0.369); 
+    background-color: rgba(158, 218, 241, 0.369);
     box-sizing: border-box;
-    /*padding: 20px;
     height: 100%;
-    color: rgb(205, 20, 230);
-    font-weight: 500;
-    font-size: 14px;
-    letter-spacing: 1px;
-    font-style: italic; */
-    height:100%; 
-
   }
   .main{
     display: flex;
@@ -40,41 +36,9 @@
 .cert{
     padding-left: 20%;
 }
-/* .disassociate{
-  cursor: pointer;
-	border-radius: 5em;
-	color: #e7dfdf;
-	background: linear-gradient(to right, #b8a09f, #4c40fb);
-	border: 0;
-	padding-left: 40px;
-	padding-right: 50px;
-	padding-bottom: 10px;
-	padding-top: 10px;
-	font-family: 'Ubuntu', sans-serif;
-	margin-left: 70%;
-  margin-top: 2%;
-	font-size: 13px;
-	box-shadow: 0 0 20px 1px rgba(0, 0, 0, 0.04);
-	font-weight: bold;
-	text-align: center;
-} */
-.table{
-  margin-top: 3%;
-  margin-left: 20%;
-  border-spacing: 25px;
-}
-.rows{
-  height: 10px;
-}
-
-
-
-body {
-  font-family: 'lato', sans-serif;
-}
 .container {
   max-width: 1000px;
-  margin-left: 20px;
+  margin-left: 50px;
   margin-right: auto;
   padding-left: 10px;
   padding-right: 10px;
@@ -82,31 +46,62 @@ body {
 
 h2 {
   font-size: 26px;
-  margin: 20px 0;
-  text-align: center;
-  small {
-    font-size: 0.5em;
-  }
+  margin-top: 5%;
+  margin-left: 450px;
+  margin-bottom: 10%;
 }
+
+.button-3 {
+  appearance: none;
+  background-color: #343b3b;
+  border: 1px solid rgba(27, 31, 35, .15);
+  border-radius: 6px;
+  box-shadow: rgba(27, 31, 35, .1) 0 1px 0;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  font-family: -apple-system,system-ui,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji";
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+  padding: 6px 16px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: middle;
+  white-space: nowrap;
+  margin-left: 300px;
+}
+
+
 
 .responsive-table {
   li {
     border-radius: 3px;
-    padding: 25px 30px;
     display: flex;
-    /* justify-content: space-between; */
-    /* margin-bottom: px; */
+    justify-content: space-between; 
+    margin-bottom: 5px; 
     width: 300px;
   }
   .table-header {
     background-color: #95A5A6;
-    font-size: 14px;
+    font-size: 13px;
+    padding: 20px 19px;
     text-transform: uppercase;
-    letter-spacing: 0.03em;
+    letter-spacing: 0.05em;
+    font-weight: 550;
+    height: 5px;;
   }
   .table-row {
     background-color: #ffffff;
     box-shadow: 0px 0px 9px 0px rgba(0,0,0,0.1);
+    height: 2px;
+    padding: 15px 15px;
+    
   }
   .col-0{
     flex-basis: 45%;
@@ -114,12 +109,14 @@ h2 {
   .col-1 {
     flex-basis: 50%;
   }
-  .col-2 {
-    flex-basis:100%;
-   
-  }
+   .col-2 {
   
-  @media all and (max-width: 767px) {
+     flex-basis:100%; 
+     text-align: center;
+   
+  } 
+
+  @media all and (max-width: 750px) {
     .table-header {
       display: none;
     }
@@ -135,7 +132,7 @@ h2 {
       display: flex;
       padding: 10px 0;
       &:before {
-        color: #6C7A89;
+        color: #196ec9;
         padding-right: 10px;
         content: attr(data-label);
         flex-basis: 50%;

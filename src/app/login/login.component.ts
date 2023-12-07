@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Router } from '@angular/router';
+import { Router, NavigationExtras } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -36,8 +36,11 @@ export class LoginComponent implements OnInit {
     this.http.post(this.apiUrl, body).subscribe(
       (response) => {
         // Handle successful login response
+        
+        let username =  this.myForm.controls['userName'].value;
+        console.log("Username before passing: ", username)
         console.log('Login successful', response);
-        this.router.navigate(['/home'])
+        this.router.navigate(['/home'], {state:{name: username}});
         
       },
       (error: any) => {

@@ -1,39 +1,16 @@
 <div class="main">
     <div class="left">
-        <p>Login:</p>
+        <p>Login: {{ username }} </p>
         <br><br><br><br><br><br><br><br><br>
         <a class="cert">My Certificate</a><br><br>
         <a class="cert">All Certificate</a><br>
         <a class="logout">Logout</a>
     </div>
-    <!-- <div class="right">
-        <h1>My Certificate</h1>
-        <hr>
-        
-        <table class="table">
-            <tr>
-                <button>Disassociate</button>
-            </tr>
-            <thead>
-                <tr class="rows">
-                    <th></th>
-                    <th>No</th>
-                    <th> Certificate Number </th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr class="rows" *ngFor="let item of jsonData; let i = index">
-                    <td><input type="checkbox" /></td>
-                    <td>{{ i+ 1 }}</td>
-                    <td>{{ item.SerialNumber }}</td>
-            </tbody>
-        </table>
-    </div> -->
     <div>
         <h2 class="heading">My Certificate </h2>
-        <hr>
-    <div class="container">
+        <div> <button class ="button-3">Disassociate</button></div>
         
+    <div class="container">
         <ul class="responsive-table">
           <li class="table-header">
             <div class="col col-0"></div>
@@ -43,7 +20,7 @@
           <li class="table-row" *ngFor="let item of jsonData; let i = index">
             <div class="col col-0"> <input type="checkbox"/> </div>
             <div class="col col-1" data-label="No">{{ i + 1 }}</div>
-            <div class="col col-2" data-label="CertificateNumber"><a class="CertificateNumber" href="">{{ item.SerialNumber }}</a></div>
+            <div class="col col-2" data-label="CertificateNumber"><a class="CertificateNumber" routerLink="/view">{{ item.SerialNumber }}</a></div>
           </li>
         </ul>
       </div>

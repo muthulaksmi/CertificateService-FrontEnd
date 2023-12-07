@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -9,11 +10,16 @@ import { Observable } from 'rxjs';
 })
 export class HomeComponent implements OnInit {
 
+
+  username:string = "";
   private jsonfile = "assets/data.json";
   jsonData: any;
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private router:Router) { }
   
   ngOnInit() {
+   this.username = this.router.lastSuccessfulNavigation?.extras.state?.['name'];
+
+    console.log("username ", this.username, this.router.lastSuccessfulNavigation);
     this.getJsonData().subscribe(data => {
       this.jsonData = data;
       console.log(this.jsonData); 
