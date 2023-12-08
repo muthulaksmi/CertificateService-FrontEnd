@@ -1,4 +1,7 @@
+<div class = "left">
+  <img src="/assets/lockwithdata.avif" alt="Data Hand Image" class="left-image">
 <div class="main">
+  <h1 class="h1">CERTIFICATE SERVICE</h1>
   <p class="sign" align="center">Sign in</p>
   <form class="form1" id="form1" [formGroup]="myForm" (ngSubmit)="submit()">
     <table>
@@ -40,7 +43,7 @@
     
     <tr>
       <td>
-        <div><a routerLink="/forgot" align="left" style="margin-left: 30px;">Forgot Password?</a></div>
+        <div><a routerLink="/forgot" class="forgot" align="left" style="margin-left: 30%;">Forgot Password?</a></div>
       </td>
       <td>
         <div class="signup" align="right"><a routerLink="/signup">Sign-up</a></div>
@@ -50,4 +53,5 @@
   </table>
   </form>
   <p class="error" *ngIf="submitted" align="center">{{ formerror }}</p>
+</div>
 </div>

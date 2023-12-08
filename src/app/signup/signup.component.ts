@@ -20,14 +20,40 @@ export class SignupComponent implements OnInit {
   //whitespace = false;
   myForm!: FormGroup;
   private url = 'http://localhost:8080/auth/register';
+  
+  containsLetterValidator: ValidatorFn = (control: AbstractControl) => {
+    const value = control.value as string;
+    if (!/[a-zA-Z]/.test(value)) {
+      return { containsLetter: true };
+    }
+    return null;
+   };
+
+  // passwordValidator: ValidatorFn = (control: AbstractControl) => {
+  //   const value = control.value as string;
+  //   const hasMinLength = value.length >= 8;
+  //   const hasMaxLength = value.length <=16;
+  //   const hasUppercase = /[A-Z]/.test(value);
+  //   const hasLowercase = /[a-z]/.test(value);
+  //   const hasDigit = /\d/.test(value);
+  //   const hasSpecialCharacter = /[!@#$%^&*(),.?":{}|<>]/.test(value);
+  //   const isValid = hasMinLength && hasUppercase && hasLowercase && hasDigit && hasSpecialCharacter && hasMaxLength;
+  //   if (isValid) {
+  //       return null;
+  //   }
+  //   return true;
+  //   };
+
+
   ngOnInit(): void {
     this.myForm = this.fb.group({
 
       firstName: ['', [Validators.required, Validators.pattern('^[a-zA-Z]*$'), Validators.maxLength(20)]],
       lastName: ['', [Validators.required, Validators.pattern('^[A-Za-z]*$'), Validators.maxLength(20)]],
-      userName: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9]*$'), Validators.minLength(8), Validators.maxLength(14)]],
+      userName: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9]*$'), Validators.minLength(8), Validators.maxLength(14), this.containsLetterValidator]],
       email: ['', Validators.compose([Validators.required, Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[com]{3,}$/)])],
       password: ['', Validators.compose([Validators.required, Validators.minLength(8), Validators.maxLength(16), ])],
+      //password: ['',Validators.compose[Validators.required, this.passwordValidator]],
       confirmPassword: ['', [Validators.required]],
     }); 
 
@@ -62,21 +88,24 @@ export class SignupComponent implements OnInit {
 
   errorCheckPassword() {
    
-   //const space = (this.myForm.controls['firstName'].value).indexOf();
-   //console.log(space);
-    let value = this.myForm.controls['firstName'].value;
-    if (this.myForm.get('password')?.hasError('minlength') || this.myForm.get('password')?.hasError('maxlength')) {
-      this.formerror = "** Please enter valid password. must be min of 8 char and max 16.";
-      console.log(this.formerror);
-      this.submitted = true;
-    }
-    else if (this.myForm.get('password')?.hasError('required')) {
-      this.formerror = "** password is required";
-      this.submitted = true;
-      console.log(this.formerror);
-    }
-    
-    else {
+  let value = this.myForm.controls['password'].value;
+  let hasNoSpaces = /\s/.test(value);
+      if (this.myForm.get('password')?.hasError('minlength') || this.myForm.get('password')?.hasError('maxlength')) {
+         this.formerror = "** Please enter valid password. must be min of 8 char and max 16.";
+         console.log(this.formerror);
+         this.submitted = true;
+       }
+      else if (this.myForm.get('password')?.hasError('required')) {
+        this.formerror = "** password is required";
+        this.submitted = true;
+        console.log(this.formerror);
+      }else if (hasNoSpaces) 
+      {
+        this.formerror = "** password should not contain spaces";
+        this.submitted = true;
+        console.log(this.formerror);
+      }
+    else  {
       this.formerror = "";
       this.submitted = false;
     }
@@ -104,6 +133,7 @@ export class SignupComponent implements OnInit {
     }
 
   }
+  
   errorCheckUserName() {
 
 
@@ -120,8 +150,11 @@ export class SignupComponent implements OnInit {
       this.formerror = "** Username should be only alphanumeric";
       this.submitted = true;
       console.log(this.formerror);
-    }
-    else {
+    } else if (this.myForm.get('userName')?.hasError('containsLetter')) {
+      this.formerror = "** Username must contain at least one letter";
+      this.submitted = true;
+      console.log(this.formerror);
+    } else {
       this.formerror = "";
       this.submitted = false;
     }
@@ -203,10 +236,10 @@ export class SignupComponent implements OnInit {
           //  this.dialogRef.open(PopUpComponent);
         },
           (error: any) => {
-            console.log(" Error here");
+            console.log(" Error here:  ", error);
             this.submitted = true;
-            console.error("Error during post: ", error.error.result.Message);
-            this.formerror = error.error.result.Message;
+            console.error("Error during post: ", error.error.Message);
+            this.formerror = error.error.Message;
           });
       }
     }

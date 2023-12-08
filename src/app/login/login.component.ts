@@ -32,6 +32,7 @@ export class LoginComponent implements OnInit {
       username: this.myForm.controls['userName'].value,
       password: this.myForm.controls['password'].value
      };
+     console.log("Come here submit");
     if (this.myForm.controls['userName'].value !== "" && this.myForm.controls['password'].value !== "") {
     this.http.post(this.apiUrl, body).subscribe(
       (response) => {
@@ -51,6 +52,7 @@ export class LoginComponent implements OnInit {
       });
     }
     else{
+      this.submitted=true;
       this.formerror ="All Fields are mandatory";
     }
     

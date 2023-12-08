@@ -4,7 +4,6 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { MatDialogModule } from '@angular/material/dialog';
 
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -16,13 +15,14 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ViewcertificateComponent } from './viewcertificate/viewcertificate.component';
 
-const appRoutes:Routes = [
-  {path: '', component: LoginComponent},
-  {path: 'signup',component:SignupComponent},
-  {path: 'forgot', component: FortgotComponent},
-  {path: 'home', component:HomeComponent},
-  {path: 'login', component: LoginComponent},
-  {path: 'view', component: ViewcertificateComponent}
+const appRoutes: Routes = [
+  { path: '', component: LoginComponent },
+  { path: 'signup', component: SignupComponent },
+  { path: 'forgot', component: FortgotComponent },
+  {path: 'home', component: HomeComponent},
+   
+  { path: 'login', component: LoginComponent },
+
 ]
 
 @NgModule({
@@ -45,8 +45,8 @@ const appRoutes:Routes = [
     BrowserAnimationsModule,
     MatDialogModule
   ],
-  
-   providers: [
+
+  providers: [
     provideClientHydration()
   ],
   bootstrap: [AppComponent]
