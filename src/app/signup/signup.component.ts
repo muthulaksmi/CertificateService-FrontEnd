@@ -68,7 +68,7 @@ export class SignupComponent implements OnInit {
 
     const pass = this.myForm.get('password')?.value;
     const conpass = this.myForm.get('confirmPassword')?.value
-    if (this.myForm.get('password')?.hasError('required')) {
+    if (this.myForm.get('confirmPassword')?.hasError('required')) {
       this.formerror = "** password is required";
       this.submitted = true;
       console.log(this.formerror);

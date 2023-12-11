@@ -132,7 +132,7 @@ form.form1 {
 .error {
 	height: 1em;
 	color: red;
-	font-size: 0.8em;
+	font-size: 1em;
 	padding-left: 50px;
 }
 

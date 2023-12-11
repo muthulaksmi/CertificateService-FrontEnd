@@ -1,24 +1,36 @@
 .main {
-	background-color: #FFFFFF;
-	width: 600px;
-	height: 600px;
-	margin: 3% auto;
+	background-color: white;
+	/* background: linear-gradient(to right, #ff0000, #00ff00); */
+	width: 450px;
+	height: 580px;
+	/* margin: 3% auto; */
 	border-radius: 1.5em;
 	box-shadow: 0px 11px 35px 2px rgba(0, 0, 0, 0.14);
+	border-color: #f4f4f7;
+	position: absolute; /* Position the overlay over the image */
+	top: 0;
+	left: 0;
+	display: flex; /* Optionally, use flexbox for layout within the overlay */
+	flex-direction: column; /* Adjust as needed */
+	justify-content: center; /* Adjust as needed */
+	align-items: center; /* Adjust as needed */
+	margin-top: 2%;
+
 }
 .sign {
-	padding-top: 10%;
+	padding-top: 5%;
 	color: #aa555c;
 	font-weight: bold;
 	font-size: 20px;
-	font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	font-family:'Geneva, Verdana, sans-serif';
 }
 
 .error{
 	height: 1em; 
 	color: red; 
-    font-size: 0.8em; 
+    font-size: 1em; 
 	padding-left: 50px;
+	font-family: ' Tahoma, Geneva, Verdana, sans-serif';
 }
 /* .error,
     .un {
@@ -27,95 +39,65 @@
         vertical-align: top;  Align elements to the top
     } */
 .lab{
-	margin-left:25%;
-	margin-bottom: 3%;
+	margin-left:20%;
 	font-weight: 500;
 	font-size: 14px;
-	font-style: italic;
+	color: rgb(22, 20, 20);
+	/* font-style: italic; */
 
 }
 .un {
 width: 240px;
-color: rgb(38, 50, 56);
-font-weight: 700;
-font-size: 14px;
+color: rgb(2, 15, 19);
+font-weight: 400;
+font-size: 13px;
 letter-spacing: 1px;
-background: rgba(136, 126, 126, 0.04);
-padding: 10px 20px;
-border: none;
-border-radius: 20px;
-outline: none;
-box-sizing: border-box;
-border: 2px solid rgba(0, 0, 0, 0.02); 
-/* margin-bottom: 50px; */
+
 margin-left: 48px;
 text-align: center;
-margin-bottom: 27px;
-font-family: 'Ubuntu', sans-serif;
-height: 40px;
+margin-bottom: 10px;
+font-family: Tahoma;
+height: 30px;
 }
 
 form.form1 {
-	padding-top: 20px;
+	padding-top: 10px;
 }
 
-/* .pass {
-		width: 76%;
-color: rgb(38, 50, 56);
-font-weight: 700;
-font-size: 14px;
-letter-spacing: 1px;
-background: rgba(136, 126, 126, 0.04);
-padding: 10px 20px;
-border: none;
-border-radius: 20px;
-outline: none;
-box-sizing: border-box;
-border: 2px solid rgba(0, 0, 0, 0.02);
-margin-bottom: 50px;
-margin-left: 46px;
-text-align: center;
-margin-bottom: 27px;
-font-family: 'Ubuntu', sans-serif;
-} */
-
-
-.un:focus, .pass:focus {
-	border: 2px solid rgba(0, 0, 0, 0.18) !important;
-	
-}
-
-@media (max-width: 600px) {
-	.main {
-		border-radius: 0px;
-	}
-	
-}
 .submit {
 	cursor: pointer;
-	border-radius: 5em;
-	color: #e7dfdf;
-	background: linear-gradient(to right, #b8a09f, #4c40fb);
+	color: #1b1818;
+	background-color: cornflowerblue;
 	border: 0;
-	padding-left: 40px;
-	padding-right: 50px;
-	padding-bottom: 10px;
-	padding-top: 10px;
-	font-family: 'Ubuntu', sans-serif;
+	padding-left: 25px;
+	padding-right: 25px;
+	padding-bottom: 5px;
+	padding-top: 5px;
+	font-family: 'Tahoma, Geneva, Verdana, sans-serif';
 	margin-left: 35%;
-	font-size: 13px;
+	font-size: 16px;
 	box-shadow: 0 0 20px 1px rgba(0, 0, 0, 0.04);
 	font-weight: bold;
+	font-weight: 1000px;
 	text-align: center;
 }
 
 .main table td {
-    height: 80px; 
+    height: 30px; 
 }
-.opt{
+/* .opt{
 	font-family: 'Ubuntu', sans-serif;
-}
-.left-image, top {
-	width: 100%;
-	height: 100%;
+} */
+/* .left-image,img {
+	width: 100%; */
+	/* position: relative; */
+	/* width: 100%; /* Ensure the image takes the entire width of its container 
+	height: auto; /* Maintain aspect ratio 
+	display: block;
+} */
+.main1{
+  position: relative; 
+  width: 100%; 
+  height: auto;
+  background-color: linear-gradient(to right, #ff0000, #00ff00); 
 }

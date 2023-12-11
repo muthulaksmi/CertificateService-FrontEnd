@@ -22,7 +22,10 @@ export class HomeComponent implements OnInit {
   
   ngOnInit() {
    this.username = this.router.lastSuccessfulNavigation?.extras.state?.['name'];
-
+   console.log("username: ",this.username);
+    if (this.username === undefined){
+        this.router.navigate(['/login']);
+    }
     console.log("username ", this.username, this.router.lastSuccessfulNavigation);
   }
 

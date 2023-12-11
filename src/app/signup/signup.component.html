@@ -1,6 +1,5 @@
-<div class="top">
-  <!-- <img src="/assets/ssl-image-1.jpg" alt="Data Hand Image" class="left-image"> -->
-
+<div class="main1">
+  <!-- <div class="left-image"><img src="/assets/datahand.webp" alt="Data Hand Image">  -->
 
 <div class="main">
   <p class="sign" align="center">Sign-up</p>
@@ -9,9 +8,9 @@
     <table>
       <tbody>
       <tr>
-        <td>
+        <td> 
           <div class ="lab">
-            <label align="center" style= "color:darkorchid" >First Name</label>
+            <label align="center" >First Name<span style='color:red;'>*</span></label>
             </div>
             <div>
           <input class="un" formControlName="firstName" align="center" placeholder="" autocomplete="off"
@@ -19,9 +18,11 @@
           </div>
         
         </td>
+        </tr>
+        <tr>
         <td>
           <div class ="lab">
-          <label align="center" style= "color:darkorchid" >Last Name</label>
+          <label align="center">Last Name<span style='color:red;'>*</span></label>
         </div>
           <input class="un" type="text" formControlName="lastName" align="center" placeholder="" autocomplete="" value="" (blur)="errorCheckLastName()" >
         
@@ -30,14 +31,15 @@
       <tr>
         <td>
           <div class ="lab">
-          <label align="center"  style= "color:darkorchid" >User Name</label>
+          <label align="center" >User Name<span style='color:red;'>*</span></label>
           </div>
           <input class="un" type="text" formControlName="userName" align="center" placeholder="" value="" autocomplete="off" (blur)="errorCheckUserName()" >
-        
         </td>
+        </tr>
+        <tr>
         <td>
           <div class ="lab">
-          <label align="center" style= "color:darkorchid"  >Email</label>
+          <label align="center">Email<span style='color:red;'>*</span></label>
           </div>
           <input class="un" type="email" formControlName="email" align="center" placeholder="" autocomplete="off" value="" (blur)="errorCheckEmail()">
         </td>
@@ -45,21 +47,22 @@
       <tr>
         <td>
           <div class ="lab">
-          <label align="center" style= "color:darkorchid" >Password</label>
+          <label align="center" >Password<span style='color:red;'>*</span></label>
           </div>
           <input class="un" type="password" formControlName="password" align="center" placeholder="" autocomplete="new-password" value="" (blur)="errorCheckPassword()" >
         </td>
-
+        </tr>
+        <tr>
         <td>
-          <div class ="lab" style= "color:darkorchid" >
-          <label align="center" >Confirm Password</label>
+          <div class ="lab" >
+          <label align="center" >Confirm Password<span style='color:red;'>*</span></label>
           </div>
           <input class="un" type="password" formControlName="confirmPassword" align="center" placeholder="" autocomplete="off" value="" (blur)="errorCheckConfirmPassword()">
         </td>
       </tr>
             
       <tr>
-        <td colspan="2">
+        <td>
           <button class="submit"> Submit </button>
         </td>
       </tr>
@@ -73,5 +76,5 @@
   </form>
 
 </div>
-
 </div>
+<!-- </div> -->
