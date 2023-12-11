@@ -221,12 +221,23 @@ export class SignupComponent implements OnInit {
     };
 
     if (this.myForm.controls['firstName'].value !== "" && this.myForm.controls['lastName'].value !== "" && this.myForm.controls['userName'].value !== "" && this.myForm.controls['email'].value !== "" && this.myForm.controls['password'].value !== "" && this.myForm.controls['confirmPassword'].value !== "") {
+
       this.errorCheckFirstName();
+      if (!this.submitted)  {
       this.errorCheckLastName();
+      }
+      if (!this.submitted)  {
       this.errorCheckUserName();
+      }
+      if (!this.submitted)  {
       this.errorCheckEmail();
+      }
+      if (!this.submitted)  {
       this.errorCheckPassword();
+      }
+      if (!this.submitted)  {
       this.errorCheckConfirmPassword();
+      }
       if (!this.submitted) {
         let url = 'http://localhost:8080/auth/register';
         this.http.post(url, data).subscribe((response) => {
