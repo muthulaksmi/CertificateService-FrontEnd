@@ -164,7 +164,7 @@ export class SignupComponent implements OnInit {
 
 
     if (this.myForm.get('firstName')?.hasError('pattern')) {
-      this.formerror = "** Please enter a valid name with no numbers and no special characters.";
+      this.formerror = "** Please enter a valid First Name with no numbers and no special characters.";
       console.log(this.formerror);
       this.submitted = true;
     }
@@ -188,7 +188,7 @@ export class SignupComponent implements OnInit {
 
 
     if (this.myForm.get('lastName')?.hasError('pattern')) {
-      this.formerror = "** Please enter a valid name with no numbers and no special characters.";
+      this.formerror = "** Please enter a valid Last Name with no numbers and no special characters.";
       console.log(this.formerror);
       this.submitted = true;
     }
