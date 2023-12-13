@@ -51,7 +51,7 @@ export class SignupComponent implements OnInit {
       firstName: ['', [Validators.required, Validators.pattern('^[a-zA-Z]*$'), Validators.maxLength(20)]],
       lastName: ['', [Validators.required, Validators.pattern('^[A-Za-z]*$'), Validators.maxLength(20)]],
       userName: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9]*$'), Validators.minLength(8), Validators.maxLength(16), this.containsLetterValidator]],
-      email: ['', Validators.compose([Validators.required, Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[com]{3,}$/)])],
+      email: ['', Validators.compose([Validators.required, Validators.pattern(/^(?=(?:[^.]*.){1,2}[^.]*$)[a-zA-Z0-9._%+-]+[a-zA-Z0-9]@(gmail|yahoo|hotmail|rediffmail)\.com$/)])],     
       password: ['', Validators.compose([Validators.required, Validators.minLength(8), Validators.maxLength(16), ])],
       //password: ['',Validators.compose[Validators.required, this.passwordValidator]],
       confirmPassword: ['', [Validators.required]],
