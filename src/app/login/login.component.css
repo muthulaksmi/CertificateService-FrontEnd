@@ -177,9 +177,8 @@ form.form1 {
 	color: #520ff0;
 	font-weight: 500;
 	margin-top: 2%;
-	font-family:'Ubuntu', sans-serif;
 	overflow: visible;
-	padding-left: 100%;	
+	padding-left: 150%;	
 	white-space: nowrap;
 }
 
