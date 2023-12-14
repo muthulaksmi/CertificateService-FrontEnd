@@ -1,9 +1,12 @@
 import { NgModule } from '@angular/core';
+
+
+
 import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { MatDialogModule } from '@angular/material/dialog';
-
+import { TooltipDirective } from './tooltip.directive';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -14,6 +17,7 @@ import { HomeComponent } from './home/home.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ViewcertificateComponent } from './viewcertificate/viewcertificate.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 const appRoutes: Routes = [
   { path: '', component: LoginComponent },
@@ -33,7 +37,9 @@ const appRoutes: Routes = [
     FortgotComponent,
     HomeComponent,
     DialogComponent,
-    ViewcertificateComponent
+    ViewcertificateComponent,
+    TooltipDirective,
+    
   ],
   imports: [
     BrowserModule,
@@ -43,7 +49,10 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes),
     HttpClientModule,
     BrowserAnimationsModule,
-    MatDialogModule
+    MatDialogModule,
+    MatTooltipModule,
+    
+
   ],
 
   providers: [

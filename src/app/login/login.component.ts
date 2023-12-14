@@ -15,7 +15,8 @@ export class LoginComponent implements OnInit {
   myForm!: FormGroup;
   submitted= false;
   formerror ="";
-
+  userNameError ="";
+  passwordError="";
    ngOnInit(): void {
     this.myForm = this.fb.group({ 
     
@@ -62,26 +63,26 @@ export class LoginComponent implements OnInit {
     
     if (this.myForm.get('userName')?.hasError('required')){
       
-      this.formerror = "** User Name is required";
+      this.userNameError = "** UserName is required";
       this.submitted = true;
       console.log(this.formerror);
     }  
     else 
     {
-      this.formerror = "";
+      this.userNameError = "";
       this.submitted = false;
     }
   }
   errorCheckPassword(){
     console.log("come here");
     if (this.myForm.get('password')?.hasError('required')){
-      this.formerror = "** Password is required";
+      this.passwordError = "** Password is required";
       this.submitted = true;
-      console.log(this.formerror);
+      console.log(this.passwordError);
     }  
     else
     {
-      this.formerror = "";
+      this.passwordError = "";
       this.submitted = false;
     }
   }
