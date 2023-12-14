@@ -1,10 +1,12 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators,  AbstractControl, ValidatorFn } from '@angular/forms';
+import { Component, Inject, OnInit, SecurityContext } from '@angular/core';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+
+import { FormBuilder, FormGroup, Validators, AbstractControl, ValidatorFn } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-
+import { Directive, ElementRef, Input, HostListener, Renderer2 } from '@angular/core';
 
 @Component({
   selector: 'app-signup',
@@ -13,21 +15,34 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 
 
+
 export class SignupComponent implements OnInit {
   //user!: User;  
+  message = "";
   submitted = false;
   formerror = "";
-  //whitespace = false;
+  firstnameerror = "";
+  lastNameError = "";
+  userNameError = "";
+  emailError = "";
+  passwordError = "";
+  confirmPasswordError = "";
+  firstNameTooltip = "*Alphabets only\nMaximum 20 characters only";
+  userNameTooltip = "*Alphanumeric\n8 to 16 characters."
+  emailTooltip = "e.g. someone@gmail.com";
+  passwordTooltip = "Alphanumeric, special characters. \n 8 to 16 characters."
+  // firstNameBorderColor="";
+
   myForm!: FormGroup;
   private url = 'http://localhost:8080/auth/register';
-  
+
   containsLetterValidator: ValidatorFn = (control: AbstractControl) => {
     const value = control.value as string;
     if (!/[a-zA-Z]/.test(value)) {
       return { containsLetter: true };
     }
     return null;
-   };
+  };
 
   // passwordValidator: ValidatorFn = (control: AbstractControl) => {
   //   const value = control.value as string;
@@ -51,159 +66,164 @@ export class SignupComponent implements OnInit {
       firstName: ['', [Validators.required, Validators.pattern('^[a-zA-Z]*$'), Validators.maxLength(20)]],
       lastName: ['', [Validators.required, Validators.pattern('^[A-Za-z]*$'), Validators.maxLength(20)]],
       userName: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9]*$'), Validators.minLength(8), Validators.maxLength(16), this.containsLetterValidator]],
-      email: ['', Validators.compose([Validators.required, Validators.pattern(/^(?=(?:[^.]*.){1,2}[^.]*$)[a-zA-Z0-9._%+-]+[a-zA-Z0-9]@(gmail|yahoo|hotmail|rediffmail)\.com$/)])],     
-      password: ['', Validators.compose([Validators.required, Validators.minLength(8), Validators.maxLength(16), ])],
+      //Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[com]{3,}$/)
+      email: ['', Validators.compose([Validators.required, Validators.pattern(/^[a-zA-Z0-9.a-zA-Z%+-]+@[a-zA-Z0-9-]+(?<!\.)\.[a-zA-Z]{2,}$/)])],
+
+      password: ['', Validators.compose([Validators.required, Validators.minLength(8), Validators.maxLength(16),])],
       //password: ['',Validators.compose[Validators.required, this.passwordValidator]],
       confirmPassword: ['', [Validators.required]],
-    }); 
+    });
 
   }
-  constructor(private fb: FormBuilder, private router: Router, private http: HttpClient, public dialog: MatDialog) {
+  constructor(private fb: FormBuilder, private router: Router, private http: HttpClient, public dialog: MatDialog, private sanitizer: DomSanitizer) {
 
   }
-    
-  
 
+  // showTooltip(fields: string) {
+  //   switch(fields)
+  //   {
+  //     case "firstname":
+  //       this.TooltipMessage = "Value should be alphanumeric!";
+  //       this.isTooltipVisible=true;
+  //       break;
+  //     // case "lastname":
+  //     //   this.TooltipMessage = "Value should be alphanumeric!";
+  //     //   this.isTooltipVisible=true;
+  //     //   break;
+  //   }
+  // }
+  // hideTooltip(fields: string) {
+  //   switch(fields)
+  //   {
+  //     case "firstname":
+  //       this.isTooltipVisible=false;
+  //       this.errorCheckFirstName();
+
+  //       break;
+  //     // case "lastname":
+  //     //     this.isTooltipVisible=false;
+  //     //     this.errorCheckLastName();
+  //     //     break;
+  //   }
+  // }
   errorCheckConfirmPassword() {
 
     const pass = this.myForm.get('password')?.value;
     const conpass = this.myForm.get('confirmPassword')?.value
     if (this.myForm.get('confirmPassword')?.hasError('required')) {
-      this.formerror = "** password is required";
+      this.confirmPasswordError = "**Required";
       this.submitted = true;
       console.log(this.formerror);
     }
     else if (pass !== null && conpass !== null && this.myForm.get('password')?.value !== this.myForm.get('confirmPassword')?.value) {
-      this.formerror = "** password don't match";
+      this.confirmPasswordError = "** password doesn't match";
       this.submitted = true;
       console.log(this.formerror);
     }
     else {
-      this.formerror = "";
+      this.confirmPasswordError = "";
       this.submitted = false;
     }
 
   }
-  
+  getTooltipFirstName(): string {
+    // Function to sanitize HTML content for tooltip
+    const content = '"Alphabets only"+ "<br>" +" Maximum of 20 characters"';
+    return (this.sanitizer.sanitize(SecurityContext.HTML, content)) ?? '';
+
+  }
 
   errorCheckPassword() {
-   
-  let value = this.myForm.controls['password'].value;
-  let hasNoSpaces = /\s/.test(value);
-      if (this.myForm.get('password')?.hasError('minlength') || this.myForm.get('password')?.hasError('maxlength')) {
-         this.formerror = "** Please enter valid password. must be min of 8 char and max 16.";
-         console.log(this.formerror);
-         this.submitted = true;
-       }
-      else if (this.myForm.get('password')?.hasError('required')) {
-        this.formerror = "** password is required";
-        this.submitted = true;
-        console.log(this.formerror);
-      }else if (hasNoSpaces) 
-      {
-        this.formerror = "** password should not contain spaces";
-        this.submitted = true;
-        console.log(this.formerror);
-      }
-    else  {
-      this.formerror = "";
+
+    let value = this.myForm.controls['password'].value;
+    let hasNoSpaces = /\s/.test(value);
+    if (this.myForm.get('password')?.hasError('required')) {
+      this.passwordError = "*Required";
+      this.submitted = true;
+      console.log(this.formerror);
+    } else if (this.myForm.get('password')?.hasError('minlength') || (this.myForm.get('password')?.hasError('required'))) {
+      this.passwordError = "Enter Valid Input";
+      console.log(this.formerror);
+      this.submitted = true;
+    }
+
+    else {
+      this.passwordError = "";
       this.submitted = false;
     }
 
   }
-  
- 
+
+
 
   errorCheckEmail() {
 
 
     if (this.myForm.get('email')?.hasError('pattern')) {
-      this.formerror = "** Please enter valid email address";
+      this.emailError = "** Please enter valid email address";
       console.log(this.formerror);
       this.submitted = true;
     }
     else if (this.myForm.get('email')?.hasError('required')) {
-      this.formerror = "** Email is required";
+      this.emailError = "*Required";
       this.submitted = true;
       console.log(this.formerror);
     }
     else {
-      this.formerror = "";
+      this.emailError = "";
       this.submitted = false;
     }
 
   }
-  
+
   errorCheckUserName() {
 
 
-    if (this.myForm.get('userName')?.hasError('minlength') || this.myForm.get('userName')?.hasError('maxlength')) {
-      this.formerror = "** Please enter valid UserName. must be min of 8 char and max 16.";
-      console.log(this.formerror);
-      this.submitted = true;
-    }
-    else if (this.myForm.get('userName')?.hasError('required')) {
-      this.formerror = "** User Name is required";
+    if (this.myForm.get('userName')?.hasError('required')) {
+      this.userNameError = "*Required";
       this.submitted = true;
       console.log(this.formerror);
-    } else if (this.myForm.get('userName')?.hasError('pattern')) {
-      this.formerror = "** Username should be only alphanumeric";
-      this.submitted = true;
+
+    } else if (this.myForm.get('userName')?.hasError('minlength') || this.myForm.get('userName')?.hasError('maxlength') || (this.myForm.get('userName')?.hasError('pattern')) || (this.myForm.get('userName')?.hasError('containsLetter'))) {
+      this.userNameError = "Enter Valid Input";
       console.log(this.formerror);
-    } else if (this.myForm.get('userName')?.hasError('containsLetter')) {
-      this.formerror = "** Username must contain at least one letter";
       this.submitted = true;
-      console.log(this.formerror);
     } else {
-      this.formerror = "";
+      this.userNameError = "";
       this.submitted = false;
     }
 
   }
   errorCheckFirstName() {
 
-
-    if (this.myForm.get('firstName')?.hasError('pattern')) {
-      this.formerror = "** Please enter a valid First Name with no numbers and no special characters.";
-      console.log(this.formerror);
+    if (this.myForm.get('firstName')?.hasError('required')) {
+      this.firstnameerror = "*Required";
       this.submitted = true;
-    }
-    else if (this.myForm.get('firstName')?.hasError('required')) {
-      this.formerror = "** First Name is required";
-      this.submitted = true;
-      console.log(this.formerror);
-    }
-    else if (this.myForm.get('firstName')?.hasError('maxlength')) {
-      this.formerror = "** First Name should not exceed 20 char in length";
+    }else if (this.myForm.get('firstName')?.hasError('pattern') || this.myForm.get('firstName')?.hasError('maxlength')) {
+      this.firstnameerror = "Enter valid input";
       this.submitted = true;
 
     }
     else {
-      this.formerror = "";
+      this.firstnameerror = "";
       this.submitted = false;
     }
 
   }
   errorCheckLastName() {
 
-
-    if (this.myForm.get('lastName')?.hasError('pattern')) {
-      this.formerror = "** Please enter a valid Last Name with no numbers and no special characters.";
+    if (this.myForm.get('lastName')?.hasError('pattern') || (this.myForm.get('lastName')?.hasError('maxlength'))) {
+      this.lastNameError = "Enter valid input";
       console.log(this.formerror);
       this.submitted = true;
     }
     else if (this.myForm.get('lastName')?.hasError('required')) {
-      this.formerror = "** Last Name is required";
+      this.lastNameError = "*Required";
       this.submitted = true;
       console.log(this.formerror);
     }
-    else if (this.myForm.get('lastName')?.hasError('maxlength')) {
-      this.formerror = "** lastName should not exceed 20 char in length";
-      this.submitted = true;
-
-    }
     else {
-      this.formerror = "";
+      this.lastNameError = "";
       this.submitted = false;
     }
 
@@ -223,20 +243,20 @@ export class SignupComponent implements OnInit {
     if (this.myForm.controls['firstName'].value !== "" && this.myForm.controls['lastName'].value !== "" && this.myForm.controls['userName'].value !== "" && this.myForm.controls['email'].value !== "" && this.myForm.controls['password'].value !== "" && this.myForm.controls['confirmPassword'].value !== "") {
 
       this.errorCheckFirstName();
-      if (!this.submitted)  {
-      this.errorCheckLastName();
+      if (!this.submitted) {
+        this.errorCheckLastName();
       }
-      if (!this.submitted)  {
-      this.errorCheckUserName();
+      if (!this.submitted) {
+        this.errorCheckUserName();
       }
-      if (!this.submitted)  {
-      this.errorCheckEmail();
+      if (!this.submitted) {
+        this.errorCheckEmail();
       }
-      if (!this.submitted)  {
-      this.errorCheckPassword();
+      if (!this.submitted) {
+        this.errorCheckPassword();
       }
-      if (!this.submitted)  {
-      this.errorCheckConfirmPassword();
+      if (!this.submitted) {
+        this.errorCheckConfirmPassword();
       }
       if (!this.submitted) {
         let url = 'http://localhost:8080/auth/register';
@@ -273,6 +293,9 @@ export class SignupComponent implements OnInit {
   }
 
 
+
+
+
 }
 
 
@@ -301,4 +324,8 @@ export class DialogComponent {
     this.router.navigate(['/login']);
     //Close the dialog
   }
+}
+
+function showTooltip(fields: any, string: any) {
+  throw new Error('Function not implemented.');
 }
